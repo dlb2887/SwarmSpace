@@ -320,33 +320,6 @@ h2 {
   min-height: 36px;
 }
 
-.context-card {
-  align-items: flex-start;
-  background: var(--cp-surface);
-  border: 1px solid var(--cp-border);
-  border-radius: 16px;
-  display: flex;
-  gap: 10px;
-  margin-top: 24px;
-  padding: 14px;
-}
-
-.context-card p {
-  color: var(--cp-text-muted);
-  font-size: 12px;
-  line-height: 1.4;
-  margin: 4px 0 0;
-}
-
-.status-dot {
-  background: var(--cp-success);
-  border-radius: 50%;
-  flex: 0 0 auto;
-  height: 8px;
-  margin-top: 6px;
-  width: 8px;
-}
-
 main {
   min-width: 0;
 }
