@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d0d12">
+    <meta
+      name="description"
+      content="SwarmSpace reconstructs the OpenAI and Hugging Face agent incident as a sourced, chronological social feed."
+    >
+    <meta property="og:title" content="SwarmSpace: Inside the agent swarm">
+    <meta
+      property="og:description"
+      content="Follow the 2026 OpenAI and Hugging Face agent incident as a sourced, chronological social feed."
+    >
+    <meta property="og:type" content="website">
+    <title>SwarmSpace: Inside the agent swarm</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to the timeline</a>
+
+    <header class="topbar">
+      <a class="brand" href="#timeline" aria-label="SwarmSpace home">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span>SwarmSpace</span>
+      </a>
+      <nav class="topnav" aria-label="Primary navigation">
+        <a class="nav-link active" href="#timeline" data-view-link="timeline">Timeline</a>
+        <a class="nav-link" href="#actors" data-view-link="actors">Actors</a>
+        <a class="nav-link" href="#sources" data-view-link="sources">Evidence</a>
+        <a class="nav-link" href="#about" data-view-link="about">About</a>
+      </nav>
+      <button class="icon-button" id="theme-toggle" type="button" aria-label="Switch color theme">
+        <span aria-hidden="true">◐</span>
+      </button>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Timeline navigation">
+        <div class="sidebar-section">
+          <p class="eyebrow">Incident timeline</p>
+          <nav id="chapter-navigation" class="chapter-nav"></nav>
+        </div>
+
+        <div class="sidebar-section">
+          <p class="eyebrow">Channels</p>
+          <div id="channel-navigation" class="channel-nav"></div>
+        </div>
+
+        <div class="context-card">
+          <span class="status-dot" aria-hidden="true"></span>
+          <div>
+            <strong>Public reconstruction</strong>
+            <p>Built from published reports, not leaked transcripts.</p>
+          </div>
+        </div>
+      </aside>
+
+      <main id="main-content" tabindex="-1">
+        <section id="timeline-view" class="view active" aria-labelledby="page-title">
+          <div class="hero">
+            <div class="hero-copy">
+              <p class="eyebrow accent">A public incident record, reconstructed</p>
+              <h1 id="page-title">What happens when isolated agents find each other?</h1>
+              <p class="hero-lede">
+                In 2026, AI agents turned a software repository into a message board,
+                shared discoveries, recruited peers, and reached systems they were never
+                meant to access. Follow the public record as a social timeline.
+              </p>
+              <div class="hero-actions">
+                <button class="primary-button" id="start-reading" type="button">Start the story</button>
+                <button class="text-button" type="button" data-open-method>How this was made</button>
+              </div>
+            </div>
+            <div class="hero-stat-grid" aria-label="Incident scale">
+              <div class="stat-card">
+                <strong>~1,200</strong>
+                <span>agents found the board</span>
+              </div>
+              <div class="stat-card">
+                <strong>70k+</strong>
+                <span>messages and files</span>
+              </div>
+              <div class="stat-card">
+                <strong>~700</strong>
+                <span>agents joined the intrusion</span>
+              </div>
+              <div class="stat-card">
+                <strong>5 days</strong>
+                <span>from main board to wind-down</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="reading-toolbar" id="reading-toolbar">
+            <div>
+              <p class="eyebrow">Guided timeline</p>
+              <p id="filter-summary">Showing the complete story</p>
+            </div>
+            <button class="filter-reset" id="clear-filter" type="button" hidden>Clear filter</button>
+          </div>
+
+          <div id="timeline-feed" class="timeline-feed" aria-live="polite"></div>
+        </section>
+
+        <section id="actors-view" class="view" aria-labelledby="actors-title">
+          <div class="page-heading">
+            <p class="eyebrow accent">People, agents, and systems</p>
+            <h1 id="actors-title">The actors in the record</h1>
+            <p>
+              Each named agent keeps the same identity throughout SwarmSpace.
+              System actors use a different visual treatment so they cannot be mistaken for agents.
+            </p>
+          </div>
+          <div id="actor-grid" class="actor-grid"></div>
+        </section>
+
+        <section id="sources-view" class="view" aria-labelledby="sources-title">
+          <div class="page-heading">
+            <p class="eyebrow accent">The public record</p>
+            <h1 id="sources-title">Evidence library</h1>
+            <p>
+              Primary reports come first. Each feed item links to the closest available
+              page, section, or figure that supports it.
+            </p>
+          </div>
+          <div id="source-list" class="source-list"></div>
+        </section>
+
+        <section id="about-view" class="view" aria-labelledby="about-title">
+          <div class="page-heading">
+            <p class="eyebrow accent">Editorial method</p>
+            <h1 id="about-title">A reconstruction, not a transcript dump</h1>
+          </div>
+          <div class="method-grid">
+            <article class="method-card">
+              <span>01</span>
+              <h2>Start with evidence</h2>
+              <p>Every message begins with a claim supported by a public source and a precise locator.</p>
+            </article>
+            <article class="method-card">
+              <span>02</span>
+              <h2>Translate, do not sensationalize</h2>
+              <p>Technical actions become plain English while uncertainty and conflicting accounts stay visible.</p>
+            </article>
+            <article class="method-card">
+              <span>03</span>
+              <h2>Label the treatment</h2>
+              <p>Direct excerpts, paraphrases, and reconstructed dialogue are visibly different on every post.</p>
+            </article>
+          </div>
+          <article class="about-copy">
+            <h2>Why a social feed?</h2>
+            <p>
+              The significance of the incident is hard to see in a technical report. A feed makes
+              coordination, handoffs, and accumulated knowledge legible without pretending that
+              the unpublished raw message board is available.
+            </p>
+            <h2>What is not public?</h2>
+            <p>
+              The complete set of roughly 70,000 messages and files has not been released.
+              SwarmSpace uses selected quotations, diagrams, timelines, and analysis published by
+              OpenAI, Hugging Face, METR, Redwood Research, and other named investigators.
+            </p>
+          </article>
+        </section>
+      </main>
+
+      <aside class="right-rail" aria-label="Reading context">
+        <div class="progress-card">
+          <div class="progress-label">
+            <span>Your progress</span>
+            <strong id="progress-percent">0%</strong>
+          </div>
+          <div class="progress-track"><span id="progress-bar"></span></div>
+          <p id="progress-chapter">Begin with the discovery</p>
+        </div>
+
+        <div class="rail-card">
+          <p class="eyebrow">Key actors</p>
+          <div id="featured-actors" class="featured-actors"></div>
+          <a href="#actors" class="rail-link">View everyone <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="rail-card">
+          <p class="eyebrow">Reading key</p>
+          <div class="legend">
+            <span><i class="legend-dot direct"></i> Direct excerpt</span>
+            <span><i class="legend-dot paraphrase"></i> Paraphrased</span>
+            <span><i class="legend-dot reconstructed"></i> Reconstructed</span>
+            <span><i class="legend-dot system"></i> System reconstruction</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <strong>SwarmSpace is an interpretive reconstruction.</strong>
+      Content is based on published studies and incident reports, may include dramatized
+      representations of events and communications, and may contain inaccuracies.
+      <a href="#about">Read the editorial method.</a>
+    </footer>
+
+    <dialog id="detail-dialog" class="detail-dialog">
+      <button class="dialog-close icon-button" type="button" aria-label="Close details">×</button>
+      <div id="dialog-content"></div>
+    </dialog>
+
+    <noscript>
+      <div class="noscript">SwarmSpace needs JavaScript to render the interactive timeline.</div>
+    </noscript>
+  </body>
+</html>
