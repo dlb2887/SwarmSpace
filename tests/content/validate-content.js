@@ -22,6 +22,7 @@ const sourceIds = ids(data.sources);
 const actorIds = ids(data.actors);
 const channelIds = ids(data.channels);
 const chapterIds = ids(data.chapters);
+const postIds = ids(data.posts);
 const treatments = new Set(["direct", "paraphrase", "reconstructed", "system"]);
 const actorTypes = new Set([
   "agent",
@@ -98,6 +99,58 @@ for (const post of data.posts) {
   }
 }
 
+if (!data.social?.postMeta || !Array.isArray(data.social?.comments)) {
+  errors.push("Social metadata and comments are required");
+} else {
+  const comments = data.social.comments;
+
+  for (const id of duplicates(comments)) {
+    errors.push(`Duplicate comment id: ${id}`);
+  }
+
+  for (const [postId, metadata] of Object.entries(data.social.postMeta)) {
+    if (!postIds.has(postId)) {
+      errors.push(`Post metadata references unknown post ${postId}`);
+    }
+    for (const actorId of metadata.mentions || []) {
+      if (!actorIds.has(actorId)) {
+        errors.push(`Post ${postId} mentions unknown actor ${actorId}`);
+      }
+    }
+  }
+
+  for (const post of data.posts) {
+    if (!data.social.postMeta[post.id]) {
+      errors.push(`Post ${post.id} has no social metadata`);
+    }
+  }
+
+  for (const comment of comments) {
+    if (!postIds.has(comment.postId)) {
+      errors.push(`Comment ${comment.id} references unknown post ${comment.postId}`);
+    }
+    if (!actorIds.has(comment.actorId)) {
+      errors.push(`Comment ${comment.id} references unknown actor ${comment.actorId}`);
+    }
+    if (!treatments.has(comment.treatment)) {
+      errors.push(`Comment ${comment.id} has invalid treatment ${comment.treatment}`);
+    }
+    if (!comment.content || !comment.evidenceNote || !comment.evidenceSourceId) {
+      errors.push(`Comment ${comment.id} has incomplete content or evidence`);
+    }
+    if (!sourceIds.has(comment.evidenceSourceId)) {
+      errors.push(
+        `Comment ${comment.id} references unknown source ${comment.evidenceSourceId}`
+      );
+    }
+    for (const actorId of comment.mentions || []) {
+      if (!actorIds.has(actorId)) {
+        errors.push(`Comment ${comment.id} mentions unknown actor ${actorId}`);
+      }
+    }
+  }
+}
+
 const expectedNamedAgents = [
   "10147",
   "23619B",
@@ -167,6 +220,24 @@ for (const name of expectedNamedAgents) {
   }
 }
 
+for (const actor of data.actors.filter((record) => record.type === "agent")) {
+  const hasPost = data.posts.some((post) => post.actorId === actor.id);
+  const hasComment = data.social.comments.some(
+    (comment) => comment.actorId === actor.id
+  );
+  const hasMention =
+    Object.values(data.social.postMeta).some((meta) =>
+      (meta.mentions || []).includes(actor.id)
+    ) ||
+    data.social.comments.some((comment) =>
+      (comment.mentions || []).includes(actor.id)
+    );
+
+  if (!hasPost && !hasComment && !hasMention) {
+    errors.push(`Named agent has no social activity: ${actor.id}`);
+  }
+}
+
 const strictCausal = data.actors.find((actor) => actor.id === "strict-causal");
 if (!strictCausal || strictCausal.type !== "scorer") {
   errors.push("Strict_Causal must exist as a scorer actor");
@@ -178,5 +249,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Validated ${data.posts.length} posts, ${data.actors.length} actors, and ${data.sources.length} sources.`
+  `Validated ${data.posts.length} posts, ${data.social.comments.length} comments, ${data.actors.length} actors, and ${data.sources.length} sources.`
 );

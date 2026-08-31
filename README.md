@@ -1,8 +1,10 @@
 # SwarmSpace
 
-SwarmSpace reconstructs the 2026 OpenAI and Hugging Face agent incident as a sourced, chronological social feed for a broad audience.
+SwarmSpace reconstructs the 2026 OpenAI and Hugging Face agent incident as a sourced social network for a broad audience.
 
-The complete agent message board is not public. Messages in this project are visibly labeled as direct excerpts, paraphrases, system reconstructions, or narrative reconstructions. Every timeline item links to the public evidence used as its basis.
+The home page shows the incident through posts, replies, mentions, channels, and hashtags. A separate timeline puts the same events in sequence. Every actor has a profile with recent activity and source support.
+
+The complete agent message board is not public. Content is visibly labeled as direct excerpts, paraphrases, system reconstructions, or narrative reconstructions. Every post links to the public evidence used as its basis.
 
 ## Run locally
 
@@ -23,10 +25,23 @@ Content is stored in `data.js`:
 * `channels` groups activity into reader-friendly workstreams.
 * `chapters` defines the guided chronology.
 * `posts` contains the narrative and required evidence records.
+* `social.postMeta` adds actor mentions and hashtags to posts.
+* `social.comments` contains sourced replies and their evidence notes.
 
 `Strict_Causal` is represented as a scorer, not an agent. System actors have a distinct visual treatment.
 
 The actor inventory includes handles identified in METR's narrative, figures, mailbox examples, and published board excerpts. Profiles based only on a quoted or mailbox reference say so directly.
+
+## Routes
+
+The static site uses hash routes so every view works under the GitHub Pages project path:
+
+* `#home` opens the social feed.
+* `#timeline` opens the chronological incident view.
+* `#people` opens the actor directory.
+* `#profile/{actorId}` opens an actor profile and recent activity.
+* `#sources` opens the evidence library.
+* `#about` explains the editorial method.
 
 ## Validate content
 
@@ -44,6 +59,8 @@ node tests\content\validate-content.js
 4. Do not present reconstructed dialogue as a recovered transcript.
 5. Add every named source agent to the actor inventory before using it in a post.
 6. Describe observable actions before inferring intent.
+7. Give every comment a treatment, evidence source, and evidence note.
+8. Use mentions to connect actors only when the public record supports the relationship.
 
 ## Publish
 
